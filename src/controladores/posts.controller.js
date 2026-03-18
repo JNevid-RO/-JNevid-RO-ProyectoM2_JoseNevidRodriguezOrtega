@@ -1,6 +1,9 @@
 const { obtenerPosts } = require("../servicios/posts.service");
 const { crearPost } = require("../servicios/posts.service");
 const { obtenerPostsConAutor } = require("../servicios/posts.service");
+const { obtenerPostPorId } = require("../servicios/posts.service");
+const { actualizarPost } = require("../servicios/posts.service");
+const { eliminarPost } = require("../servicios/posts.service");
 
 const getPosts = async (req, res) => {
   try {
@@ -55,8 +58,71 @@ const getPostsPorAutor = async (req, res) => {
   }
 };
 
+const getPostPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await obtenerPostPorId(id);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post no encontrado" });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error obteniendo post" });
+  }
+};
+
+const putPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content, published } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({ error: "title y content son obligatorios" });
+    }
+
+    const postActualizado = await actualizarPost(id, {
+      title,
+      content,
+      published
+    });
+
+    if (!postActualizado) {
+      return res.status(404).json({ error: "Post no encontrado" });
+    }
+
+    res.json(postActualizado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error actualizando post" });
+  }
+};
+
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const postEliminado = await eliminarPost(id);
+
+    if (!postEliminado) {
+      return res.status(404).json({ error: "Post no encontrado" });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error eliminando post" });
+  }
+};
+
 module.exports = {
   getPosts,
   postPost,
-  getPostsPorAutor
-};
+  getPostsPorAutor, 
+  getPostPorId, 
+  putPost,
+  deletePost
+}; 
