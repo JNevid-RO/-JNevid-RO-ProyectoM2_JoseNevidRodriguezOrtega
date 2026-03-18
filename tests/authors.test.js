@@ -15,7 +15,7 @@ describe("Endpoints de Authors", () => {
 test("POST /authors debe crear un autor", async () => {
   const nuevoAutor = {
     name: "Test User",
-    email: `test${Date.now()}@mail.com`, // 👈 evita duplicados
+    email: `test${Date.now()}@mail.com`,
     bio: "Bio de prueba"
   };
 

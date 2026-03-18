@@ -29,3 +29,7 @@ app.get("/db-test", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+const postsRoutes = require("./rutas/posts.routes");
+
+app.use("/posts", postsRoutes);
