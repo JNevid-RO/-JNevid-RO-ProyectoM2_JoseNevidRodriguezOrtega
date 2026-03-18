@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getAutores } = require("../controladores/authors.controller");
+
+const { getAutores, postAutor } = require("../controladores/authors.controller");
 
 router.get("/", getAutores);
-
+router.post("/", postAutor);
 module.exports = router;
