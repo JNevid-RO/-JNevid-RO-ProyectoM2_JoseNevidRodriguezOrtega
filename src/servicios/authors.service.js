@@ -18,6 +18,15 @@ const crearAutor = async ({ name, email, bio }) => {
   return result.rows[0];
 };
 
+const obtenerAutorPorId = async (id) => {
+  const result = await pool.query(
+    "SELECT * FROM authors WHERE id = $1",
+    [id]
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
-  obtenerAutores,crearAutor
+  obtenerAutores,crearAutor,obtenerAutorPorId
 };

@@ -1,5 +1,6 @@
 const { crearAutor } = require("../servicios/authors.service");
 const { obtenerAutores } = require("../servicios/authors.service");
+const { obtenerAutorPorId } = require("../servicios/authors.service");
 
 const getAutores = async (req, res) => {
   try {
@@ -37,7 +38,25 @@ const postAutor = async (req, res) => {
   }
 };
 
+const getAutorPorId = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const autor = await obtenerAutorPorId(id);
+
+    if (!autor) {
+      return res.status(404).json({ error: "Autor no encontrado" });
+    }
+
+    res.json(autor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error obteniendo autor" });
+  }
+};
+
 module.exports = {
   getAutores,
-  postAutor
+  postAutor,
+  getAutorPorId
 };

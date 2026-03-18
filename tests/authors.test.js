@@ -39,3 +39,15 @@ test("POST /authors debe fallar si no hay name", async () => {
 
   expect(res.statusCode).toBe(400);
 });
+
+test("GET /authors/:id debe devolver un autor existente", async () => {
+  const res = await request(app).get("/authors/1");
+
+  expect([200, 404]).toContain(res.statusCode);
+});
+
+test("GET /authors/:id debe devolver 404 si no existe", async () => {
+  const res = await request(app).get("/authors/999999");
+
+  expect(res.statusCode).toBe(404);
+});

@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json());
 app.use("/authors", authorsRoutes);
 
-// Ruta base
 app.get("/", (req, res) => {
   res.json({ mensaje: "API MiniBlog funcionando" });
 });
