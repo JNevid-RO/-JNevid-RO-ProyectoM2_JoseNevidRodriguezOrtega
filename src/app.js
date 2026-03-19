@@ -1,16 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const pool = require("./db");
-
-const initDB = async () => {
-  try {
-    const sql = fs.readFileSync(path.join(__dirname, "../scripts/setup.sql"), "utf8");
-    await pool.query(sql);
-    console.log("Database inicializada");
-  } catch (error) {
-    console.error("DB error de inicializacion:", error.message);
-  }
-};
+const fs = require("fs");
+const path = require("path");
 
 const authorsRoutes = require("./rutas/authors.routes");
 const postsRoutes = require("./rutas/posts.routes");
