@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const pool = require("./db");
 
-// Inicializar BD al startup
 const initDB = async () => {
   try {
     const sql = fs.readFileSync(path.join(__dirname, "../scripts/setup.sql"), "utf8");
@@ -21,6 +20,12 @@ const postsRoutes = require("./rutas/posts.routes");
 const app = express();
 
 app.use(express.json());
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
+
+const swaggerDocument = YAML.load("./docs/openapi.yaml");
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/authors", authorsRoutes);
 app.use("/posts", postsRoutes);
 
