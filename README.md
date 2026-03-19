@@ -23,14 +23,14 @@ La API permite realizar operaciones CRUD sobre:
 
 ### 1. Clonar repositorio
 
-```bash
+bash:
 git clone <tu-repo-url>
 cd miniblog-api
 
-2. Instalar dependencias
+### 2. Instalar dependencias
 bash: npm install
 
-3. Configurar variables de entorno
+### 3. Configurar variables de entorno
 Crear archivo .env en la raíz del proyecto:
 
 DB_HOST=localhost
@@ -40,20 +40,19 @@ DB_PASSWORD=tu_password
 DB_NAME=miniblog
 PORT=3000
 
-4. Ejecutar script SQL
+### 4. Ejecutar script SQL
 
 Crear la base de datos y tablas ejecutando:
 
 bash:  psql -h localhost -U postgres -d postgres -f scripts/setup.sql
 
-5. Ejecutar la aplicación
-bash:  npm run dev
+### 5. Ejecutar la aplicación
+bash:  npm run dev 
 
-Cómo ejecutar tests
+## Cómo ejecutar tests
 bash: npm test
 
 Se utilizan Jest y Supertest para validar los endpoints principales de la API.
-
 
 Documentación OpenAPI (Swagger)
 La documentación de la API está disponible en:
@@ -61,14 +60,14 @@ docs/openapi.yaml
 Swagger UI en producción:
 https://jnevid-ro-proyectom2josenevidrodriguezortega-production.up.railway.app/api-docs
 
-☁️ Deployment en Railway
-1. Configuración del proyecto
+## Deployment en Railway
+### 1. Configuración del proyecto
 
 Proyecto desplegado en Railway
 
 Servicio Node.js + PostgreSQL
 
-2. Variables de entorno (en el servicio de la app)
+### 2. Variables de entorno (en el servicio de la app)
 PORT=3000
 
 DB_HOST=${PGHOST}
@@ -77,7 +76,7 @@ DB_USER=${PGUSER}
 DB_PASSWORD=${PGPASSWORD}
 DB_NAME=${PGDATABASE}
 
-3. URLs del proyecto
+### 3. URLs del proyecto
 
  Public URL:
 
@@ -87,7 +86,7 @@ Internal URL (uso interno Railway):
 
 jnevid-ro-proyectom2-josenevidr.railway.internal
 
-4. Base de datos
+### 4. Base de datos
 
 Se utilizó PostgreSQL en Railway.
 
@@ -95,7 +94,7 @@ Para inicializar la base de datos, se ejecutó:
 
 scripts/setup.sql 
 
-Registro del uso de IA:
+## Registro del uso de IA:
 
 Durante el desarrollo del proyecto se utilizó inteligencia artificial (ChatGPT y GitHub Copilot) para:
 
