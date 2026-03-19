@@ -1,13 +1,25 @@
 require("dotenv").config();
 const express = require("express");
-const pool = require("./db");
 const fs = require("fs");
 const path = require("path");
+const pool = require("./db");
+
+// Inicializar BD al startup
+const initDB = async () => {
+  try {
+    const sql = fs.readFileSync(path.join(__dirname, "../scripts/setup.sql"), "utf8");
+    await pool.query(sql);
+    console.log("✅ Database initialized");
+  } catch (error) {
+    console.error("DB init error:", error.message);
+  }
+};
 
 const authorsRoutes = require("./rutas/authors.routes");
 const postsRoutes = require("./rutas/posts.routes");
 
 const app = express();
+
 app.use(express.json());
 app.use("/authors", authorsRoutes);
 app.use("/posts", postsRoutes);
@@ -29,8 +41,10 @@ app.get("/db-test", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`);
+  initDB().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en puerto ${PORT}`);
+    });
   });
 }
 
