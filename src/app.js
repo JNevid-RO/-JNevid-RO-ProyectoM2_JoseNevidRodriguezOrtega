@@ -1,24 +1,19 @@
-const authorsRoutes = require("./rutas/authors.routes");
-const pool = require("./db");
 require("dotenv").config();
 const express = require("express");
+const pool = require("./db");
+
+const authorsRoutes = require("./rutas/authors.routes");
+const postsRoutes = require("./rutas/posts.routes");
 
 const app = express();
 
 app.use(express.json());
 app.use("/authors", authorsRoutes);
+app.use("/posts", postsRoutes);
 
 app.get("/", (req, res) => {
   res.json({ mensaje: "API MiniBlog funcionando" });
 });
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
-
-module.exports = app;
 
 app.get("/db-test", async (req, res) => {
   try {
@@ -30,6 +25,12 @@ app.get("/db-test", async (req, res) => {
   }
 });
 
-const postsRoutes = require("./rutas/posts.routes");
+const PORT = process.env.PORT || 3000;
 
-app.use("/posts", postsRoutes);
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+  });
+}
+
+module.exports = app;
